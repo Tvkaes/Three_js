@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="./three.min.js"></script>
+    <script>
+
+    let camera;
+    let scene;
+    let render;
+    let geometric;
+    let material; 
+    let mesh;
+
+
+    function initialize(){
+     
+    //THREE js 
+    
+    //camera parameters (FOV,width height,minDistance,maxDistance)
+     camera=new THREE.PerspectiveCamera(100,window.innerWidth/innerHeight,1,1500)
+     //camera position(x,y,z)
+     camera.position.set(0,0,300)
+     //scene 
+     scene=new THREE.Scene()
+     //adding the scene
+     scene.add(camera)
+
+     //Geometric
+     //Icosaedro parametros(radio,detalle)
+     geometric=new THREE.IcosahedronGeometry(200,1)
+     //Material 
+     //mesh type  
+     //MeshNormalMaterial() its more colorfull and realistic
+     material=new THREE.MeshBasicMaterial({
+         color:'white',
+         wireframe:true,
+         wireframeLinewidth:4
+     })
+
+     //mesh call (geometric,material)
+      mesh=new THREE.Mesh(geometric,material)
+      //adding mesh to scene
+      scene.add(mesh)
+      //render  
+      //WebGL
+      render=new THREE.WebGLRenderer()
+      //render color (color,alfa)
+      render.setClearColor('transparent',1)
+      //render size 
+      
+      render.setSize(window.innerWidth,window.innerHeight)
+      //adding the render to the body  
+      document.body.appendChild(render.domElement)
+       
+
+    }
+
+    initialize()
+
+    //animating the render 
+
+    function animating(){
+        requestAnimationFrame(animating)
+
+        mesh.rotation.x+=0.012
+        mesh.rotation.y+=0.012
+
+        render.render(scene,camera)
+    
+    }
+    
+    animating()
+       
+    
+    
+    </script>
+
+
+
+    
+</body>
+</html>
